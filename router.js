@@ -10,8 +10,10 @@ const requireSignin = passport.authenticate('local', {session:false});
 module.exports = function(app) {
   app.get('/', requireAuth, function(req, res) {
     res.send({hi: 'there'});
-  })
+  });
   app.post('/signin', requireSignin, Authentication.signin);
   app.post('/signup', Authentication.signup);
+  app.get('/match', MatchController.getMatches);
   app.post('/match', MatchController.createMatch);
+  app.post('/updateMatch', MatchController.updateMatch);
 }

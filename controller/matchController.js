@@ -29,3 +29,34 @@ exports.createMatch = function (req, res, next) {
     });
   });
 }
+
+exports.getMatches = function(req, res) {
+  Match.find({}, function(err, matches) {
+    if(err) {
+      return next(err);
+    }
+
+   var matchesMap = {};
+
+   matches.forEach(function(match) {
+     matchesMap[match._id] = match;
+   });
+
+  res.json(matchesMap);
+ });
+}
+ exports.updateMatch = function(req, res) {
+   const matchId = req.body.id;
+   const name = req.body.name;
+
+   Match.findByIdAndUpdate(matchId,
+    {$push: {playerNames: name}},
+    {safe: true, upsert: true},
+    function(err, doc) {
+        if(err){
+          console.log(err);
+        }else{
+          res.json({success : true});
+        }
+    });
+  }
