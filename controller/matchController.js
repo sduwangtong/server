@@ -35,14 +35,7 @@ exports.getMatches = function(req, res) {
     if(err) {
       return next(err);
     }
-
-   var matchesMap = {};
-
-   matches.forEach(function(match) {
-     matchesMap[match._id] = match;
-   });
-
-  res.json(matchesMap);
+    res.json(matches);
  });
 }
  exports.updateMatch = function(req, res) {
